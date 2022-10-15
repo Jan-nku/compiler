@@ -1,0 +1,7 @@
+clang -emit-llvm -S main.c -o main.ll # 生成文本形式的LLVM IR
+llc main.ll -o main.S # LLVM 生成目标代码
+
+clang -emit-llvm -S Test.c -o Test.ll
+llc handwrite.ll -o handwrite.S
+llc Test.ll -o Test.S
+clang xxx.ll sylib.c -o xxx
