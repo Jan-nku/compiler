@@ -1,0 +1,30 @@
+1      INT		int                      
+1      ID	                 a         0		
+1      SEMICOLON	;                   
+3      INT		int                      
+3      ID	                 main      0		
+3      LPAREN		(                     
+3      RPAREN		)                     
+4      LBRACE		{                     
+5      INT		int                      
+5      ID	                 a         4		
+5      SEMICOLON	;                   
+6      ID	                 a         4		
+6      ASSIGN		=                     
+6      NUMBER	             1         	
+6      ADD		+                        
+6      NUMBER	             2         	
+6      SEMICOLON	;                   
+7      IF		if                        
+7      LPAREN		(                     
+7      ID	                 a         4		
+7      LESS		<                       
+7      NUMBER	             5         	
+7      RPAREN		)                     
+8      RETURN		return                
+8      NUMBER	             1         	
+8      SEMICOLON	;                   
+9      RETURN		return                
+9      NUMBER	             0         	
+9      SEMICOLON	;                   
+10     RBRACE		}                     

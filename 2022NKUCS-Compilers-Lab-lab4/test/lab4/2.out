@@ -1,0 +1,79 @@
+3      INT		int                      
+3      ID	                 f         0		
+3      LPAREN		(                     
+3      RPAREN		)                     
+3      LBRACE		{                     
+6      INT		int                      
+6      ID	                 a         3		
+6      SEMICOLON	;                   
+7      ID	                 a         3		
+7      ASSIGN		=                     
+7      NUMBER	             0         	
+7      SEMICOLON	;                   
+8      KEYWORD             while     	
+8      LPAREN		(                     
+8      ID	                 a         3		
+8      LESS		<                       
+8      NUMBER	             10        	
+8      RPAREN		)                     
+8      LBRACE		{                     
+9      ID	                 a         8		
+9      ASSIGN		=                     
+9      ID	                 a         8		
+9      MUL		*                        
+9      OCTAL	              19        	
+9      SEMICOLON	;                   
+10     RBRACE		}                     
+11     RETURN		return                
+11     ID	                 a         3		
+11     SEMICOLON	;                   
+12     RBRACE		}                     
+14     INT		int                      
+14     ID	                 main      0		
+14     LPAREN		(                     
+14     RPAREN		)                     
+14     LBRACE		{                     
+15     INT		int                      
+15     ID	                 _testid   14		
+15     SEMICOLON	;                   
+16     ID	                 _testid   14		
+16     ASSIGN		=                     
+16     NUMBER	             0         	
+16     SEMICOLON	;                   
+17     IF		if                        
+17     LPAREN		(                     
+17     ID	                 _testid   14		
+17     EQUAL		==                     
+17     NUMBER	             0         	
+17     RPAREN		)                     
+17     LBRACE		{                     
+18     INT		int                      
+18     ID	                 _testid   17		
+18     SEMICOLON	;                   
+19     INT		int                      
+19     ID	                 _testid2  17		
+19     SEMICOLON	;                   
+20     ID	                 _testid1  17		
+20     ASSIGN		=                     
+20     ID	                 _testid1  17		
+20     ADD		+                        
+20     NUMBER	             1         	
+20     SEMICOLON	;                   
+21     RBRACE		}                     
+25     LBRACE		{                     
+26     INT		int                      
+26     ID	                 a         25		
+26     SEMICOLON	;                   
+27     RBRACE		}                     
+28     LBRACE		{                     
+29     INT		int                      
+29     ID	                 a         28		
+29     SEMICOLON	;                   
+30     RBRACE		}                     
+31     INT		int                      
+31     ID	                 b         14		
+31     SEMICOLON	;                   
+39     RETURN		return                
+39     NUMBER	             0         	
+39     SEMICOLON	;                   
+40     RBRACE		}                     
