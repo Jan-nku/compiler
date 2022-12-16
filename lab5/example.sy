@@ -1,0 +1,11 @@
+int a = 0;
+int foo(int b){
+}
+int main()
+{
+    foo(a);
+    const int a=2, b=1;
+    while(a<1){
+        a = 1;
+    }
+}
