@@ -204,6 +204,81 @@ LINECOMMENT \/\/[^\n]*
     return COMMA;
 }
 
+"putint" {
+    if(dump_tokens)
+        DEBUG_FOR_LAB4(yytext);
+    char *temp;
+    temp = new char[strlen(yytext) + 1];
+    strcpy(temp, yytext);
+    yylval.strtype = temp;
+    std::vector<Type*> paramsType;
+    std::vector<SymbolEntry*> paramsSe;
+    paramsType.push_back(TypeSystem::intType);
+    Type* funcType = new FunctionType(TypeSystem::voidType, paramsType, paramsSe);
+    SymbolTable* st = identifiers;
+    while(st->getPrev())
+        st = st->getPrev();
+    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
+    st->install(yytext, se);
+    return ID;
+}
+
+"getint" {
+    if(dump_tokens)
+        DEBUG_FOR_LAB4(yytext);
+    char *temp;
+    temp = new char[strlen(yytext) + 1];
+    strcpy(temp, yytext);
+    yylval.strtype = temp;
+    std::vector<Type*> paramsType;
+    std::vector<SymbolEntry*> paramsSe;
+    paramsType.push_back(TypeSystem::intType);
+    Type* funcType = new FunctionType(TypeSystem::voidType, paramsType, paramsSe);
+    SymbolTable* st = identifiers;
+    while(st->getPrev())
+        st = st->getPrev();
+    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
+    st->install(yytext, se);
+    return ID;
+}
+
+"getch" {
+    if(dump_tokens)
+        DEBUG_FOR_LAB4(yytext);
+    char *temp;
+    temp = new char[strlen(yytext) + 1];
+    strcpy(temp, yytext);
+    yylval.strtype = temp;
+    std::vector<Type*> paramsType;
+    std::vector<SymbolEntry*> paramsSe;
+    paramsType.push_back(TypeSystem::intType);
+    Type* funcType = new FunctionType(TypeSystem::voidType, paramsType, paramsSe);
+    SymbolTable* st = identifiers;
+    while(st->getPrev())
+        st = st->getPrev();
+    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
+    st->install(yytext, se);
+    return ID;
+}
+
+"putch" {
+    if(dump_tokens)
+        DEBUG_FOR_LAB4(yytext);
+    char *temp;
+    temp = new char[strlen(yytext) + 1];
+    strcpy(temp, yytext);
+    yylval.strtype = temp;
+    std::vector<Type*> paramsType;
+    std::vector<SymbolEntry*> paramsSe;
+    paramsType.push_back(TypeSystem::intType);
+    Type* funcType = new FunctionType(TypeSystem::voidType, paramsType, paramsSe);
+    SymbolTable* st = identifiers;
+    while(st->getPrev())
+        st = st->getPrev();
+    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
+    st->install(yytext, se);
+    return ID;
+}
 
 {DECIMIAL} {
     if(dump_tokens)
