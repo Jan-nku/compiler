@@ -1,0 +1,4 @@
+a func is reDef
+compiler: src/parser.y:828: int yyparse(): Assertion `identifiers->getPrev()->install((yyvsp[-4].strtype), se)' failed.
+timeout: 监视的命令已核心转储
+Aborted

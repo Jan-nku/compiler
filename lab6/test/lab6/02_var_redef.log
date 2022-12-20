@@ -1,0 +1,4 @@
+identifier "b" is already defined
+compiler: src/parser.y:667: int yyparse(): Assertion `false' failed.
+timeout: 监视的命令已核心转储
+Aborted

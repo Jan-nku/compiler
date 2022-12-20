@@ -1,0 +1,4 @@
+you should return void, but return i32
+compiler: src/Ast.cpp:609: virtual void ReturnStmt::typeCheck(): Assertion `this->retValue && retType->isVoid() == false' failed.
+timeout: 监视的命令已核心转储
+Aborted

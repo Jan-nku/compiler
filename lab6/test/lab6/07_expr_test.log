@@ -1,0 +1,4 @@
+void expr cannot in a BinaryExpr
+compiler: src/Ast.cpp:538: virtual void BinaryExpr::typeCheck(): Assertion `false' failed.
+timeout: 监视的命令已核心转储
+Aborted

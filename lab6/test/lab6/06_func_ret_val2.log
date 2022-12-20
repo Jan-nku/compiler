@@ -1,0 +1,4 @@
+function "@func" shoule return a vaild type
+compiler: src/Ast.cpp:529: virtual void FunctionDef::typeCheck(): Assertion `!funcRetType->isVoid() && !ret == false' failed.
+timeout: 监视的命令已核心转储
+Aborted

@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.md": "markdown",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "list": "cpp"
+    }
+}

@@ -1,0 +1,4 @@
+function "func" having 1 params, is undefined
+compiler: src/parser.y:263: int yyparse(): Assertion `se != nullptr' failed.
+timeout: 监视的命令已核心转储
+Aborted
