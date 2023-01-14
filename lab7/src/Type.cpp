@@ -42,7 +42,7 @@ std::string VoidType::toStr()
 std::string FunctionType::toStr()
 {
     std::ostringstream buffer;
-    //buffer << returnType->toStr() << "()";
+    buffer << returnType->toStr() << "(";
     for (auto it = paramsType.begin(); it != paramsType.end(); it++) {
         buffer << (*it)->toStr();
         if (it + 1 != paramsType.end())

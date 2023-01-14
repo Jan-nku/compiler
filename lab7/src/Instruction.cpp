@@ -155,7 +155,6 @@ void CmpInstruction::output() const
     }
 
     fprintf(yyout, "  %s = icmp %s %s %s, %s\n", s1.c_str(), op.c_str(), type.c_str(), s2.c_str(), s3.c_str());
-
 }
 
 UncondBrInstruction::UncondBrInstruction(BasicBlock *to, BasicBlock *insert_bb) : Instruction(UNCOND, insert_bb)
@@ -163,19 +162,17 @@ UncondBrInstruction::UncondBrInstruction(BasicBlock *to, BasicBlock *insert_bb) 
     branch = to;
 }
 
-void UncondBrInstruction::output() const
-{
-    fprintf(yyout, "  br label %%B%d\n", branch->getNo());
-}
-
-void UncondBrInstruction::setBranch(BasicBlock *bb)
-{
+void UncondBrInstruction::setBranch(BasicBlock* bb) {
     branch = bb;
 }
 
-BasicBlock *UncondBrInstruction::getBranch()
-{
+BasicBlock* UncondBrInstruction::getBranch() {
     return branch;
+}
+
+void UncondBrInstruction::output() const
+{
+    fprintf(yyout, "  br label %%B%d\n", branch->getNo());
 }
 
 CondBrInstruction::CondBrInstruction(BasicBlock*true_branch, BasicBlock*false_branch, Operand *cond, BasicBlock *insert_bb) : Instruction(COND, insert_bb){
@@ -220,10 +217,9 @@ BasicBlock *CondBrInstruction::getTrueBranch()
     return true_branch;
 }
 
-RetInstruction::RetInstruction(Operand *src, BasicBlock *insert_bb) : Instruction(RET, insert_bb)
-{
-    if(src != nullptr)
-    {
+RetInstruction::RetInstruction(Operand* src, BasicBlock* insert_bb)
+    : Instruction(RET, insert_bb) {
+    if (src != nullptr) {
         operands.push_back(src);
         src->addUse(this);
     }
@@ -235,14 +231,10 @@ RetInstruction::~RetInstruction()
         operands[0]->removeUse(this);
 }
 
-void RetInstruction::output() const
-{
-    if(operands.empty())
-    {
+void RetInstruction::output() const {
+    if (operands.empty()) {
         fprintf(yyout, "  ret void\n");
-    }
-    else
-    {
+    } else {
         std::string ret, type;
         ret = operands[0]->toStr();
         type = operands[0]->getType()->toStr();
@@ -264,12 +256,18 @@ AllocaInstruction::~AllocaInstruction()
         delete operands[0];
 }
 
-void AllocaInstruction::output() const
-{
+void AllocaInstruction::output() const {
     std::string dst, type;
     dst = operands[0]->toStr();
-    type = se->getType()->toStr();
-    fprintf(yyout, "  %s = alloca %s, align 4\n", dst.c_str(), type.c_str());
+    if (se->getType()->isInt()) {
+        type = se->getType()->toStr();
+        fprintf(yyout, "  %s = alloca %s, align 4\n", dst.c_str(),
+                type.c_str());
+    } else if (se->getType()->isArray()) {
+        type = se->getType()->toStr();
+        fprintf(yyout, "  %s = alloca %s, align 4\n", dst.c_str(),
+                type.c_str());
+    }
 }
 
 LoadInstruction::LoadInstruction(Operand *dst, Operand *src_addr, BasicBlock *insert_bb) : Instruction(LOAD, insert_bb)
@@ -429,10 +427,10 @@ MachineOperand* Instruction::genMachineOperand(Operand* ope)
         if(id_se->isGlobal())
             mope = new MachineOperand(id_se->toStr().c_str());
         else if (id_se->isParam()) {
-            if (id_se->getParamNo() < 4)
+            /*if (id_se->getParamNo() < 4)
                 mope = new MachineOperand(MachineOperand::REG,
                                           id_se->getParamNo());
-            else
+            else*/
                 mope = new MachineOperand(MachineOperand::REG, 3);
         }
         else
@@ -685,7 +683,7 @@ void UncondBrInstruction::genMachineCode(AsmBuilder* builder)
     auto cur_block = builder->getBlock();
     std::string temp;
     temp+=".L";
-    temp+=to_string(branch->getNo());
+    temp+=std::to_string(branch->getNo());
     MachineOperand* dst = new MachineOperand(temp);
     auto cur_inst =new BranchMInstruction(cur_block, BranchMInstruction::B, dst);
     cur_block->InsertInst(cur_inst);
@@ -697,13 +695,13 @@ void CondBrInstruction::genMachineCode(AsmBuilder* builder)
     auto cur_block = builder->getBlock();
     std::string temp;
     temp+=".L";
-    temp+=to_string(true_branch->getNo());
+    temp+=std::to_string(true_branch->getNo());
     MachineOperand* dst = new MachineOperand(temp);
     auto cur_inst = new BranchMInstruction(cur_block, BranchMInstruction::B, dst, cur_block->getCmpCond());
     cur_block->InsertInst(cur_inst);
     temp="";
     temp+=".L";
-    temp+=to_string(false_branch->getNo());
+    temp+=std::to_string(false_branch->getNo());
     dst = new MachineOperand(temp);
     cur_inst = new BranchMInstruction(cur_block, BranchMInstruction::B, dst);
     cur_block->InsertInst(cur_inst);

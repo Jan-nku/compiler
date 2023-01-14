@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include "Ast.h"
 #include "Unit.h"
-//#include "MachineCode.h"
-//#include "LinearScan.h"
+#include "MachineCode.h"
+#include "LinearScan.h"
 using namespace std;
 
 Ast ast;                //抽象语法树
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     
     yyparse();//语法分析
 
+    dump_ast = true;
     if(dump_ast)
         ast.output();//打印抽象语法树
 
@@ -82,11 +83,10 @@ int main(int argc, char *argv[])
     ast.typeCheck();
     //中间代码生成
     ast.genCode(&unit);
-    
+    dump_ir = true;
     if(dump_ir)
         unit.output();//打印中间代码
 
-    /*
     //实现IR指令到汇编指令的翻译
     unit.genMachineCode(&mUnit);
     //线性扫描寄存器分配算法
@@ -95,6 +95,5 @@ int main(int argc, char *argv[])
     if(dump_asm)
         mUnit.output();//打印汇编代码
     return 0;
-    */
 }
 

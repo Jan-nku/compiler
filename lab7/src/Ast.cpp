@@ -49,6 +49,17 @@ void Ast::genCode(Unit *unit)
     root->genCode();
 }
 
+void FunctionDef::deleteCon(BasicBlock* block){
+        Instruction* i = (block)->begin();
+        Instruction* last = (block)->rbegin();
+        while (i != last) {
+            if (i->isCond() || i->isUncond()) {
+                (block)->remove(i);
+            }
+            i = i->getNext();
+        }
+}
+
 //函数定义代码生成
 void FunctionDef::genCode()
 {
@@ -72,14 +83,8 @@ void FunctionDef::genCode()
         Instruction* ins_end=(*block)->rbegin();
 
         //删除基本块中的条件或无条件跳转语句
-        Instruction* i = (*block)->begin();
-        Instruction* last = (*block)->rbegin();
-        while (i != last) {
-            if (i->isCond() || i->isUncond()) {
-                (*block)->remove(i);
-            }
-            i = i->getNext();
-        }
+        Instruction* lastIns = (*block)->rbegin();
+        deleteCon(*block);
         
         //针对函数的最后一条语句进行流程图绘制
         if(ins_end->isCond()){
@@ -240,7 +245,9 @@ void Id::genCode()
 {
     BasicBlock *bb = builder->getInsertBB();
     Operand *addr = dynamic_cast<IdentifierSymbolEntry*>(symbolEntry)->getAddr();
-    new LoadInstruction(dst, addr, bb);
+    if(this->getType()->isInt()||this->getType()->isFloat()||this->getType()->isBool()){
+        new LoadInstruction(dst, addr, bb);
+    }
 }
 
 void IfStmt::genCode()

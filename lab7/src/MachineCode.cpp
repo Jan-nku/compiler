@@ -492,9 +492,7 @@ void MachineFunction::output()
     auto fp = new MachineOperand(MachineOperand::REG, 11);
     auto sp = new MachineOperand(MachineOperand::REG, 13);
     auto lr = new MachineOperand(MachineOperand::REG, 14);
-    (new StackMInstrcuton(nullptr, StackMInstrcuton::PUSH, get_saved_regs(), fp,
-                          lr))
-        ->output();
+    (new StackMInstrcuton(nullptr, StackMInstrcuton::PUSH, get_saved_regs(), fp,lr))->output();
     (new MovMInstruction(nullptr, MovMInstruction::MOV, fp, sp))->output();
     int off = AllocSpace(0);
     auto size = new MachineOperand(MachineOperand::IMM, off);
