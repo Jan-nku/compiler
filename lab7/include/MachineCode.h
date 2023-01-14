@@ -9,12 +9,14 @@
 #include "Type.h"
 
 /* Hint:
+
 * MachineUnit: Compiler unit
 * MachineFunction: Function in assembly code 
 * MachineInstruction: Single assembly instruction  
 * MachineOperand: Operand in assembly instruction, such as immediate number, register, address label */
 
 /* Todo:
+
 * We only give the example code of "class BinaryMInstruction" and "class AccessMInstruction" (because we believe in you !!!),
 * You need to complete other the member function, especially "output()" ,
 * After that, you can use "output()" to print assembly code . */
@@ -169,6 +171,7 @@ public:
     std::vector<MachineInstruction*>& getInsts() {return inst_list;};
     std::vector<MachineInstruction*>::iterator begin() { return inst_list.begin(); };
     std::vector<MachineInstruction*>::iterator end() { return inst_list.end(); };
+    std::vector<MachineInstruction*>::reverse_iterator rbegin() { return inst_list.rbegin(); };
     MachineBlock(MachineFunction* p, int no) { this->parent = p; this->no = no; };
     MachineFunction* getParent() const { return parent; };
     void InsertInst(MachineInstruction* inst) { this->inst_list.push_back(inst); };

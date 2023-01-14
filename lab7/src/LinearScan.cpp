@@ -102,7 +102,7 @@ void LinearScan::computeLiveIntervals()
                 }
             if (in && out) {
                 begin = std::min(begin, (*(block->begin()))->getNo());
-                end = std::max(end, (*(block->rbegin()))->getNo());
+                end = std::max(end, (*(block->end()))->getNo());
             } else if (!in && out) {
                 for (auto i : block->getInsts())
                     if (i->getDef().size() > 0 &&
@@ -110,7 +110,7 @@ void LinearScan::computeLiveIntervals()
                         begin = std::min(begin, i->getNo());
                         break;
                     }
-                end = std::max(end, (*(block->rbegin()))->getNo());
+                end = std::max(end, (*(block->end()))->getNo());
             } else if (in && !out) {
                 begin = std::min(begin, (*(block->begin()))->getNo());
                 int temp = 0;

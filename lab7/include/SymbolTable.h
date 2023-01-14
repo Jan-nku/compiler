@@ -162,7 +162,7 @@ public:
     float* getFArrayValue(){return arrayFValue;};
     void setArrayValue(int*v){this->arrayValue=v;};
     void setFArrayValue(float*v){this->arrayFValue=v;};
-
+    bool getConst() const { return constant; };
     //暂时先这么用
     void setParam(){
         this->funcParam = true;

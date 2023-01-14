@@ -417,7 +417,7 @@ void CmpMInstruction::output()
 //先抄上，到时候看着改改
 StackMInstrcuton::StackMInstrcuton(MachineBlock* p, int op, 
                 std::vector<MachineOperand*> src, MachineOperand* src1,MachineOperand* src2,
-                int cond = MachineInstruction::NONE)
+                int cond)
 {
     // TODO
     this->parent = p;
@@ -492,7 +492,7 @@ void MachineFunction::output()
     auto fp = new MachineOperand(MachineOperand::REG, 11);
     auto sp = new MachineOperand(MachineOperand::REG, 13);
     auto lr = new MachineOperand(MachineOperand::REG, 14);
-    (new StackMInstrcuton(nullptr, StackMInstrcuton::PUSH, getSavedRegs(), fp,
+    (new StackMInstrcuton(nullptr, StackMInstrcuton::PUSH, get_saved_regs(), fp,
                           lr))
         ->output();
     (new MovMInstruction(nullptr, MovMInstruction::MOV, fp, sp))->output();
@@ -629,7 +629,7 @@ void MachineUnit::output()
     //print bridge label
     for(auto i : global_list){
         IdentifierSymbolEntry* temp=(IdentifierSymbolEntry*)i;
-        fprintf(yyout, "addr_%s%d:\n",temp->toStr().c_str(),n++);//原来是函数结束前n++！！！
+        fprintf(yyout, "addr_%s%d:\n",temp->toStr().c_str(),uniquenum++);//原来是函数结束前n++！！！
         fprintf(yyout,"\t.word %s\n",temp->toStr().c_str());
     }
 }

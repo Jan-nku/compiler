@@ -202,7 +202,7 @@ class CompoundStmt : public StmtNode
 private:
     StmtNode *stmt;
 public:
-    CompoundStmt(StmtNode *stmt) : stmt(stmt) {};
+    CompoundStmt(StmtNode *stmt = nullptr) : stmt(stmt) {};
     void output(int level);
     void typeCheck();
     void genCode();
@@ -303,7 +303,7 @@ class ReturnStmt : public StmtNode
 private:
     ExprNode *retValue;
 public:
-    ReturnStmt(ExprNode*retValue) : retValue(retValue) {};
+    ReturnStmt(ExprNode*retValue = nullptr) : retValue(retValue) {};
     void output(int level);
     void typeCheck();
     void genCode();

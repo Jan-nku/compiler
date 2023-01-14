@@ -274,7 +274,7 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(se);
+    st->install(yytext, se);
     return ID;
 }
 "putch" {
@@ -294,7 +294,7 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(se);
+    st->install(yytext, se);
     return ID;
 }
 "getch" {
@@ -313,7 +313,7 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(se);
+    st->install(yytext, se);
     return ID;
 }
 "getfloat" {
@@ -351,7 +351,7 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(se);
+    st->install(yytext, se);
     return ID;
 }
 "putarray" {
@@ -383,7 +383,7 @@ BLOCKCOMMENTEND "*/"
     yylval.strtype = lexeme;
     //构造funcType
     std::vector<Type*> vec;
-    vec.push_back(new ArrayType(TypeSystem::intType, -1););
+    vec.push_back(new ArrayType(TypeSystem::intType, -1));
     Type* funcType = new FunctionType(TypeSystem::intType, vec);
     //构造SymbolEntry，插入符号表中
     SymbolTable* st = identifiers;
@@ -428,7 +428,7 @@ BLOCKCOMMENTEND "*/"
     SymbolTable* st = identifiers;
     while(st->getPrev())
         st = st->getPrev();
-    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel(), -1, true);
+    SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
     st->install(yytext, se);
     return ID;
 }

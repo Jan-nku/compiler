@@ -8,7 +8,7 @@
     int yylex();
     int yyerror( char const * );
 
-    std::stack<StmtNode*> whileStack;
+    std::stack<WhileStmt*> whileStack;
     Type *nowType;
 
     ArrayType *currentArray;
@@ -39,7 +39,7 @@
 %token <ftype> FLOATING
 %token IF ELSE WHILE
 %token INT VOID FLOAT CONST
-%token LPAREN RPAREN LBRACE RBRACE SEMICOLON LBRACET RBRACET
+%token LPAREN RPAREN LBRACE RBRACE SEMICOLON LBRACKET RBRACKET
 %token ADD SUB MUL DIV MOD OR AND NOT LESS GREATER EQUAL NOTEQUAL LESSEQUAL GREATEREQUAL ASSIGN  
 %token RETURN BREAK CONTINUE
 %token COMMA
@@ -162,19 +162,19 @@ IfStmt
 
 WhileStmt
     : WHILE LPAREN Cond RPAREN {
-        //Cond不是bool的情况，涉及隐式类型转换
         if(!$3->getType()->isBool()){
             SymbolEntry *se_temp = new TemporarySymbolEntry(TypeSystem::boolType, SymbolTable::getLabel());
             SymbolEntry *se_zero = new ConstantSymbolEntry(TypeSystem::intType, 0);
             $3 = new BinaryExpr(se_temp, BinaryExpr::NOTEQUAL, $3, new Constant(se_zero));
         }
-        StmtNode* whileNode = new WhileStmt($3);
-        whileStack.push(whileNode);
+        WhileStmt* whileStmt = new WhileStmt($3,nullptr);
+        $<stmttype>$ = whileStmt;
+        whileStack.push(whileStmt);
     }
     Stmt {
-        StmtNode* whileNode = whileStack.top();
-        ((WhileStmt*)whileNode)->setStmt($6);
-        $$=whileNode;
+        StmtNode *whileStmt = $<stmttype>5; 
+        ((WhileStmt*)whileStmt)->setStmt($6);
+        $$=whileStmt;
         whileStack.pop();
     }
     ;
@@ -453,14 +453,14 @@ Type
     ;
 
 ArrayIndices
-    : LBRACET Exp RBRACET {
+    : LBRACKET Exp RBRACKET {
         $$=$2;
     }
-    | ArrayIndices LBRACET Exp RBRACET {
+    | ArrayIndices LBRACKET Exp RBRACKET {
         $$=$1;
         $1->setNext($3);
     }
-    | LBRACET RBRACET{
+    | LBRACKET RBRACKET{
         SymbolEntry *se = new ConstantSymbolEntry(TypeSystem::intType, 0);
         $$ = new Constant(se);
     }
@@ -647,7 +647,7 @@ ConstDef
 
 InitValList
     : InitValList COMMA InitVal{
-        $$ = $1
+        $$ = $1;
     }
     | InitVal{
         $$ = $1;
