@@ -5,7 +5,6 @@ class Unit;
 class Function;
 class BasicBlock;
 
-
 class IRBuilder
 {
 private:

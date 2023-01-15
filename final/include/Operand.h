@@ -7,8 +7,7 @@
 class Instruction;
 class Function;
 
-//指令的操作数，Operand类中包含一条定义-引用链
-//def为定义该操作数的指令，uses为使用该操作数的指令
+
 // class Operand - The operand of an instruction.
 class Operand
 {

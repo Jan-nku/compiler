@@ -1,21 +1,18 @@
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
 
-#include <vector>
-#include <map>
-#include <set>
-#include <stack>
 #include <algorithm>
 #include <iostream>
+#include <map>
+#include <set>
+#include <vector>
+#include "AsmBuilder.h"
 #include "Ast.h"
 #include "BasicBlock.h"
 #include "SymbolTable.h"
-#include "AsmBuilder.h"
 
 class Unit;
 
-//函数模块，函数由多个基本块构成
-//每个函数都有一个entry基本块，它是函数的入口节点；exit基本块作为函数的出口节点
 class Function
 {
     typedef std::vector<BasicBlock *>::iterator iterator;
