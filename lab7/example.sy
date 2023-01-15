@@ -1,13 +1,19 @@
+int a;
+int b;
+int c;
+int d;
+int e;
 int main()
 {
-    int a;
-    int b;
-    int min;
-    a = 1 + 2 + 3;
-    b = 2 + 3 + 4;
-    if (a < b)
-        min = a;
-    else
-        min = b;
-    return min;
+	//a=getint();
+	//b=getint();
+	//c=getint();
+	//d=getint();
+	//e=getint();
+	int flag=0;
+	if(a-b*c!=d-a/c||a*b/c==e+d||a+b+c==d+e)
+	{
+		flag=1;
+	}
+	return flag;
 }

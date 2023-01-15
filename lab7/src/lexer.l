@@ -9,7 +9,7 @@
     #include <ostream>
     #include <fstream>
     using namespace std;
-
+    extern Unit unit;
     extern FILE *yyin; 
     extern FILE *yyout;
     extern bool dump_tokens;
@@ -255,7 +255,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "getint" {
@@ -274,7 +276,9 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "putch" {
@@ -294,7 +298,9 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "getch" {
@@ -313,7 +319,9 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "getfloat" {
@@ -331,7 +339,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "putfloat" {
@@ -351,7 +361,9 @@ BLOCKCOMMENTEND "*/"
         st = st->getPrev();
     }
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "putarray" {
@@ -371,7 +383,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "getarray" {
@@ -390,7 +404,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "putfarray" {
@@ -410,7 +426,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "getfarray" {
@@ -429,7 +447,9 @@ BLOCKCOMMENTEND "*/"
     while(st->getPrev())
         st = st->getPrev();
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, yytext, st->getLevel());
-    st->install(yytext, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "starttime" {
@@ -451,7 +471,9 @@ BLOCKCOMMENTEND "*/"
     char *temp = new char[6+strlen(yytext)];
     memcpy(temp, lexeme, 6+strlen(yytext));
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, temp, st->getLevel());
-    st->install(temp, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "stoptime" {
@@ -473,7 +495,9 @@ BLOCKCOMMENTEND "*/"
     char *temp = new char[6+strlen(yytext)];
     memcpy(temp, lexeme, 6+strlen(yytext));
     SymbolEntry* se = new IdentifierSymbolEntry(funcType, temp, st->getLevel());
-    st->install(temp, se);
+    if(st->install(yytext, se)){
+        unit.insertDeclare(se);
+    }
     return ID;
 }
 "putf" {

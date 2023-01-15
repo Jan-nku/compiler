@@ -87,6 +87,8 @@ public:
     //getValue/getFvalue获取值
     int getValue() const {return value;};
     float getFvalue() const {return fvalue;};
+    int* getArray(){return this->arrayValue;};
+    float* getFArray(){return this->arrayFValue;};
     std::string toStr();
     // You can add any function you need here.
 };

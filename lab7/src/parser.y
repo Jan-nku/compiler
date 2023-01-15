@@ -229,6 +229,7 @@ UnaryExp
             assert(se != nullptr);
         }
         //检查函数参数数量、类型是否匹配
+        
         ExprNode* callParamsType = $3;
         int paramCount = 0;
         while(callParamsType){
@@ -246,10 +247,12 @@ UnaryExp
             delete [](char*)$1;
             assert(se != nullptr);
         }
+        
         std::vector<Type*> paramsType = ((FunctionType*)(se->getType()))->getParamsType();
         callParamsType = $3;
 
         for(auto &params:paramsType){
+            
             if(params != callParamsType->getSymbolEntry()->getType()){
                  if(callParamsType->getSymbolEntry()->getType()->isArray() && params->isArray()){
                     callParamsType = (ExprNode*)callParamsType->getNext();
@@ -260,6 +263,7 @@ UnaryExp
             }
             callParamsType = (ExprNode*)callParamsType->getNext();
         }
+        
         $$ = new FuncExpr(se, $3);
     }
     | ADD UnaryExp {$$ = $2;}
@@ -428,10 +432,19 @@ LAndExp
 LOrExp
     :
     LAndExp {$$ = $1;}
-    |
-    LOrExp OR LAndExp
+    | LOrExp OR LAndExp
     {
-        SymbolEntry *se = new TemporarySymbolEntry(TypeSystem::intType, SymbolTable::getLabel());
+        SymbolEntry *boolSe;
+        if(!$1->getType()->isBool()){
+            boolSe = new TemporarySymbolEntry(TypeSystem::boolType, SymbolTable::getLabel());
+            $1 = new BinaryExpr(boolSe, BinaryExpr::NOTEQUAL, $1, new Constant(new ConstantSymbolEntry(TypeSystem::intType, 0))); 
+        }
+        if(!$3->getType()->isBool()){
+            boolSe = new TemporarySymbolEntry(TypeSystem::boolType, SymbolTable::getLabel());
+            $3 = new BinaryExpr(boolSe, BinaryExpr::NOTEQUAL, $3, new Constant(new ConstantSymbolEntry(TypeSystem::intType, 0))); 
+        }
+
+        SymbolEntry *se = new TemporarySymbolEntry(TypeSystem::boolType, SymbolTable::getLabel());
         $$ = new BinaryExpr(se, BinaryExpr::OR, $1, $3);
     }
     ;
@@ -644,7 +657,6 @@ ConstDef
     }
     ;
     
-
 InitValList
     : InitValList COMMA InitVal{
         $$ = $1;
@@ -703,11 +715,24 @@ ConstExp
     : Exp{$$ = $1;}
     ;
 
+FuncRParams 
+    : Exp {
+        $$ = $1;
+    }
+    | FuncRParams COMMA Exp {
+        $$ = $1;
+        $$->setNext($3);
+    }
+    | %empty {$$=nullptr;}
+    ;
+
 FuncDef
-    : Type ID {
+    :
+    Type ID {
         identifiers = new SymbolTable(identifiers);
     }
     LPAREN FuncFParams RPAREN {
+
         Type* funcType;
         std::vector<SymbolEntry*> vec;
         DeclStmt* temp = (DeclStmt*)$5;
@@ -780,15 +805,6 @@ FuncFParam
         delete []$2;
     }
     //允许最后几个参数有默认值
-    ;
-
-FuncRParams 
-    : Exp {$$ = $1;}
-    | FuncRParams COMMA Exp {
-        $$ = $1;
-        $$->setNext($3);
-    }
-    | %empty {$$=nullptr;}
     ;
 
 %%

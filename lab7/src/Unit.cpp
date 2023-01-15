@@ -41,8 +41,9 @@ void Unit::output() const {
                     ((IdentifierSymbolEntry*)se)->getFValue());
         }
     }
-    for (auto& func : func_list)
+    for (auto& func : func_list){
         func->output();
+    }
     for (auto se : declare_list) {
         FunctionType* type = (FunctionType*)(se->getType());
         std::string str = type->toStr();

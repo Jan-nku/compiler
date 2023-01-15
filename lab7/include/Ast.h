@@ -38,16 +38,18 @@ protected:
 public:
     Node();
     int getSeq() const {return seq;};
-
-    void setNext(Node* node){
+    Node* getNext(){return next;};
+    void setNext(Node* node) {
         Node* n = this;
-        while(n->getNext()){
+        while (n->getNext()) {
             n = n->getNext();
         }
-        n->next = node;
-    };
-    Node* getNext(){return next;};
-
+        if (n == this) {
+            this->next = node;
+        } else {
+            n->setNext(node);
+        }
+    }
     static void setIRBuilder(IRBuilder*ib) {builder = ib;};
     virtual void output(int level) = 0;
     virtual void typeCheck() = 0;
@@ -93,7 +95,7 @@ class FuncExpr : public ExprNode {
 private:
     ExprNode* param;
 public:
-    FuncExpr(SymbolEntry* se, ExprNode* param);
+    FuncExpr(SymbolEntry* se, ExprNode* param = nullptr);
     void output(int level);
     int getIValue(){return 0;};
     float getFValue(){return 0.0;};

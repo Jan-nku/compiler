@@ -466,7 +466,7 @@ void ArrayInit::genCode()
 
 }
 
-FuncExpr::FuncExpr(SymbolEntry* se, ExprNode* param = nullptr): ExprNode(se), param(param){
+FuncExpr::FuncExpr(SymbolEntry* se, ExprNode* param): ExprNode(se), param(param){
     if(se){
         if(dynamic_cast<FunctionType*>(se->getType())->getRetType()->isInt()){
             SymbolEntry* temp = new TemporarySymbolEntry(TypeSystem::intType, SymbolTable::getLabel());
@@ -989,7 +989,9 @@ bool ArrayInit::isFull(){
 void CompoundStmt::output(int level)
 {
     fprintf(yyout, "%*cCompoundStmt\n", level, ' ');
-    stmt->output(level + 4);
+    if(stmt){
+        stmt->output(level + 4);
+    }
 }
 
 void SeqNode::output(int level)
@@ -1041,7 +1043,8 @@ void ContinueStmt::output(int level) {
 void ReturnStmt::output(int level)
 {
     fprintf(yyout, "%*cReturnStmt\n", level, ' ');
-    retValue->output(level + 4);
+    if(retValue!=nullptr)
+        retValue->output(level + 4);
 }
 
 void AssignStmt::output(int level)
